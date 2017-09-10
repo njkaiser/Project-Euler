@@ -34,97 +34,58 @@
 
 
 #include <iostream>
-// #include <vector>
+#include <vector>
 
 using namespace std;
 
-#define MAX_SIZE 15
 
-void print_triangle(int h, int triangle[][MAX_SIZE]);
-void fill_data(int h, int triangle_data[], int triangle[][MAX_SIZE]);
-// void fill_data(int h, int** triangle_data, int** triangle);
-void init_triangle(int h, int triangle[][MAX_SIZE]);
-// void init_triangle(int h, int** triangle);
+void init_triangle(vector<vector<int> > &triangle);
+void print_triangle(const vector<vector<int> > &triangle);
 
-int main ()
+
+int main(int argc, char const *argv[])
 {
-  // int h = 4; // height of triangle
-  int h = 15; // height of triangle
-
   // create triangle
-  int triangle[h][MAX_SIZE];
-  init_triangle(h, triangle);
-
-
-  // keep track of indices to track (not required)
-
+  vector<vector<int> > triangle;
+  init_triangle(triangle);
+  print_triangle(triangle);
 
   // now do stuff to it
-  for(int i = h-2; i >= 0; --i) {
+  for(int i = triangle.size() - 2; i >= 0; --i) {
     for(int j = 0; j <= i; ++j) {
-      int m = std::max(triangle[i+1][j], triangle[i+1][j+1]);
-      cout << "[" << i << "][" << j << "] (val = " << triangle[i][j] << "): " << m << endl;
+      int m = max(triangle[i+1][j], triangle[i+1][j+1]);
+      // cout << "[" << i << "][" << j << "] (val = " << triangle[i][j] << "): " << m << endl;
       triangle[i][j] += m;
     }
   }
 
-
-  print_triangle(h, triangle);
-
+  print_triangle(triangle);
 
   return 0;
 }
 
 
 
-void print_triangle(int h, int triangle[][MAX_SIZE]) {
-  int index = 0;
-  for(int i = 0; i < h; ++i) {
-    for(int j = 0; j < h; ++j) {
-      if(j <= i) {
-        cout << triangle[i][j] << ", " ;
-      }
-      else {
-        triangle[i][j] = 0;
-      }
-    }
-    cout << endl;
-  }
-}
-
-
-void fill_data(int h, int triangle_data[], int triangle[][MAX_SIZE]) {
-// void fill_data(int h, int** triangle_data, int** triangle) {
-  int index = 0;
-  for(int i = 0; i < h; ++i) {
-    for(int j = 0; j < h; ++j) {
-      if(j <= i) {
-        triangle[i][j] = triangle_data[index++];
-        cout << triangle[i][j] << ", " ;
-      }
-      else {
-        triangle[i][j] = 0;
-      }
-    }
-    cout << endl;
-  }
-}
-
-
-void init_triangle(int h, int triangle[][MAX_SIZE]) {
-  // void init_triangle(int h, int** triangle) {
+void init_triangle(vector<vector<int> > &triangle) {
+  // int size = 4;
+  int size = 15;
   // int triangle_data[] = {3, 7, 4, 2, 4, 6, 8, 5, 9, 3};
   int triangle_data[] = {75, 95, 64, 17, 47, 82, 18, 35, 87, 10, 20, 4, 82, 47, 65, 19, 1, 23, 75, 3, 34, 88, 2, 77, 73, 7, 63, 67, 99, 65, 4, 28, 6, 16, 70, 92, 41, 41, 26, 56, 83, 40, 80, 70, 33, 41, 48, 72, 33, 47, 32, 37, 16, 94, 29, 53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14, 70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57, 91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48, 63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31, 4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23};
+  triangle.resize(size);
+
   int index = 0;
-  for(int i = 0; i < h; ++i) {
-    for(int j = 0; j < h; ++j) {
-      if(j <= i) {
-        triangle[i][j] = triangle_data[index++];
-        cout << triangle[i][j] << ", " ;
-      }
-      else {
-        triangle[i][j] = 0;
-      }
+  for(int i = 0; i < size; ++i) {
+    for(int j = 0; j <= i; ++j) {
+      triangle[i].push_back(triangle_data[index++]);
+    }
+  }
+}
+
+
+void print_triangle(const vector<vector<int> > &triangle) {
+  for(int i = 0; i < triangle.size(); ++i) {
+    for(int j = 0; j <= i; ++j) {
+      cout << triangle[i][j] << ", " ;
     }
     cout << endl;
   }
