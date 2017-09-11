@@ -60,6 +60,7 @@ int main(int argc, char const *argv[])
   }
 
   print_triangle(triangle);
+  cout << "MAXIMUM PATH VALUE IS " << triangle[0][0] << endl;
 
   return 0;
 }
